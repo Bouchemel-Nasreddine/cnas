@@ -1,5 +1,6 @@
 import 'package:cnas/config/const.dart';
 import 'package:cnas/config/size_config.dart';
+import 'package:cnas/views/auth/loginView.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomeState extends State<Home> {
       ),
     ),
     Container(child: Text('demande')),
-    Container(child: Text('ETS')),
+    LoginView(),
   ];
 
   int selectedWidgetIndex = 0;
