@@ -4,6 +4,8 @@ import 'package:cnas/views/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'views/auth/loginView.dart';
+
 void main() {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
@@ -45,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return MaterialApp(
       navigatorKey: mainNavigatorKey,
       routes: {
-        '/': (context) => const Home(),
+        '/': (context) => LoginView(),
       },
       initialRoute: '/',
     );

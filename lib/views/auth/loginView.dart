@@ -80,9 +80,9 @@ class LoginView extends StatelessWidget {
                           working: value.working,
                           text: 'Sign in',
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
+                           // if (_formKey.currentState!.validate()) {
                               value.login(context);
-                            }
+                           // }
                           }),
                     ],
                   ),

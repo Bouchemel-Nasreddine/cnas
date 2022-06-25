@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data classes/Patient.dart';
 import '../../config/const.dart';
+import '../../views/home.dart';
 
 class LoginViewModel extends ChangeNotifier {
   final emailController = TextEditingController();
@@ -33,6 +34,7 @@ class LoginViewModel extends ChangeNotifier {
   // }
 
   Future<void> login(BuildContext context) async {
+    /*
     if (working) return;
     working = true;
     notifyListeners();
@@ -61,6 +63,9 @@ class LoginViewModel extends ChangeNotifier {
 
     working = false;
     notifyListeners();
+
+     */
+    navigateToHome(context);
   }
 
   Future<void> forgetPassword(BuildContext context) async {
@@ -148,11 +153,7 @@ class LoginViewModel extends ChangeNotifier {
   }
 
   navigateToHome(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      '/generale_home_view',
-          (route) => false,
-    );
+    Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=> Home()), (route)=>false);
   }
 
   showSnackBar(
