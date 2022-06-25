@@ -1,5 +1,6 @@
 import 'package:cnas/config/const.dart';
 import 'package:cnas/config/size_config.dart';
+import 'package:cnas/views/demande.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -16,7 +17,7 @@ class _HomeState extends State<Home> {
         'home',
       ),
     ),
-    Container(child: Text('demande')),
+    DemandesView(),
     Container(child: Text('ETS')),
   ];
 

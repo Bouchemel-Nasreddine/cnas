@@ -1,9 +1,15 @@
+import 'dart:js';
+
 import 'package:cnas/config/generale_vars.dart';
+import 'package:cnas/viewmodels/patient_viewmodel.dart';
 import 'package:cnas/views/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context) => PatientViewModel()),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
