@@ -14,6 +14,7 @@ class _ListDemandeState extends State<ListDemande> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
         body: Center(
           child: SizedBox(
             width: SizeConfig.screenWidth * 0.8,
@@ -35,15 +36,15 @@ class _ListDemandeState extends State<ListDemande> {
           borderRadius: BorderRadius.circular(SizeConfig.screenHeight * 0.02)
         ),
             clipBehavior: Clip.antiAlias,
-            height: SizeConfig.screenHeight * 0.8,
+            height: SizeConfig.screenHeight * 0.9,
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: 20,
               itemBuilder: (context, index) => Container(
                   child: Container(
                     alignment: Alignment.center ,
                     decoration: BoxDecoration(
                       border:  Border(
-                        bottom: BorderSide(width: 1 ,color:  Color(0xFFA6A6A6))
+                        bottom: BorderSide(width: 1 ,color:  Color(0xFFF6F6F6))
                       )
                     ),
                     height: SizeConfig.screenHeight * 0.08,

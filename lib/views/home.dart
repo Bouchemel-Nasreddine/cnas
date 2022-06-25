@@ -28,7 +28,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      backgroundColor: Color(0xFFA6A6A6),
+      backgroundColor: Color(0xFFF6F6F6),
       body: Row(
         children: [
           NavigationRail(
