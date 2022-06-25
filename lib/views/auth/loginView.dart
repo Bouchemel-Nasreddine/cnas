@@ -1,4 +1,3 @@
-
 import 'package:cnas/viewmodels/auth/login_viewmodel.dart';
 import 'package:cnas/views/Component/button_widget.dart';
 import 'package:cnas/views/Component/text_field_widget.dart';
@@ -7,7 +6,6 @@ import '../../../config/const.dart';
 import '../../../config/size_config.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -29,14 +27,14 @@ class LoginView extends StatelessWidget {
                 margin: EdgeInsets.symmetric(
                     vertical: SizeConfig.screenHeight * 0.05),
                 height: SizeConfig.screenHeight * 0.85,
-                width: SizeConfig.screenWidth *0.5,
+                width: SizeConfig.screenWidth * 0.5,
                 padding: EdgeInsets.symmetric(
                   horizontal: SizeConfig.screenWidth * 0.1,
                   vertical: SizeConfig.screenHeight * 0.04,
                 ),
                 decoration: BoxDecoration(
                   borderRadius:
-                  BorderRadius.circular(SizeConfig.screenWidth * 0.1),
+                      BorderRadius.circular(SizeConfig.screenWidth * 0.1),
                   color: Colors.white,
                 ),
                 child: Form(
@@ -80,9 +78,9 @@ class LoginView extends StatelessWidget {
                           working: value.working,
                           text: 'Sign in',
                           onPressed: () {
-                           // if (_formKey.currentState!.validate()) {
-                              value.login(context);
-                           // }
+                            // if (_formKey.currentState!.validate()) {
+                            value.login(context);
+                            // }
                           }),
                     ],
                   ),
