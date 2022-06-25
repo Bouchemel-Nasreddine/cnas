@@ -1,9 +1,22 @@
 import 'package:cnas/config/generale_vars.dart';
+import 'package:cnas/viewmodels/auth/login_viewmodel.dart';
 import 'package:cnas/views/home.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'views/auth/loginView.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => LoginViewModel()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -34,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return MaterialApp(
       navigatorKey: mainNavigatorKey,
       routes: {
-        '/': (context) => const Home(),
+        '/': (context) => LoginView(),
       },
       initialRoute: '/',
     );
