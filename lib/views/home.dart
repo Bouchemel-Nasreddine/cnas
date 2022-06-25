@@ -2,6 +2,8 @@ import 'package:cnas/config/const.dart';
 import 'package:cnas/config/size_config.dart';
 import 'package:cnas/views/auth/loginView.dart';
 import 'package:cnas/views/demande/list_demande_view.dart';
+import 'package:cnas/views/reclamation/list_reclamation_view.dart';
+import 'package:cnas/views/transport/list_transport_view.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -14,8 +16,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final List<Widget> _widgets = [
     ListDemande(),
-    Container(child: Text('transports')),
-    Container(child: Text('reclamation')),
+    ListTransport(),
+    ListReclamation(),
     Container(child: Text('profile')),
 
 
