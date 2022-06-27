@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
 
-class PatientModel {
+class DemandeModel {
   final _dioClient = dio.Dio();
 
-  Future<dio.Response?> getPatients() async {
+  Future<dio.Response?> getDemandes() async {
     try {
       dio.Response response = await _dioClient.get(
-        'https://cnas2cs.herokuapp.com/patient',
+        'https://cnas2cs.herokuapp.com/demande',
         options: dio.Options(
           contentType: "application/json",
         ),

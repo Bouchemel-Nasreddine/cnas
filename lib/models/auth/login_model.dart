@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:cnas/config/base_api.dart';
 import 'package:dio/dio.dart' as dio;
+import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
 class LoginModel {
@@ -7,25 +10,21 @@ class LoginModel {
 
   //depending on the @has_phone , @loginParams sould be phone or email, 0 for email, 1 for phone
   Future<dio.Response?> login({
-    required int hasPhone,
-    required String loginParamName,
-    required String loginParam,
+    required String type,
+    required String credential,
     required String password,
   }) async {
     try {
       dio.Response response = await _dioClient.post(
         loginUrl,
-        data: dio.FormData.fromMap(
-          {
-            'has_phone': hasPhone,
-            loginParamName: loginParam,
-            'password': password,
-          },
-        ),
         options: dio.Options(
-          headers: {
-            "Content-type": "application/json",
-            "Accept": "application/json",
+          contentType: "application/json",
+        ),
+        data: jsonEncode(
+          {
+            'type': type,
+            'credential': credential,
+            'password': password,
           },
         ),
       );
@@ -41,6 +40,30 @@ class LoginModel {
       }
       return e.response;
     }
+  }
+
+  Future<http.Response> loginWithHttp({
+    required String type,
+    required String credential,
+    required String password,
+  }) async {
+    http.Response response = await http.post(
+      Uri.parse(loginUrl),
+      headers: {
+        //   'Access-Control-Allow-Origin': '*',
+        // 'Access-Control-Allow-Methods': 'GET, POST, OPTIONS, PUT, PATCH, DELETE',
+        "Content-type": "application/json"
+      },
+      body: jsonEncode({
+        'type': type,
+        'credential': credential,
+        'password': password,
+      }),
+    );
+
+    print(response.body);
+
+    return response;
   }
 
   Future<dio.Response?> forgetPassword({

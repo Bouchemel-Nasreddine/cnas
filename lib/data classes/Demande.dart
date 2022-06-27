@@ -1,32 +1,31 @@
 class Demande {
-  Demande({
-    required this.idDemande,
-    required this.idPatient,
-    required this.ville,
-    required this.dateCreation,
-    required this.etat,
-    required this.dateValidation,
-    required this.dateDebut,
-    required this.dateFin,
-    required this.x_pat ,
-    required this.y_pat ,
-    required this.x_hop ,
-    required this.y_hop
-  });
+  Demande(
+      {required this.idDemande,
+      required this.idPatient,
+      required this.ville,
+      required this.dateCreation,
+      required this.etat,
+      required this.dateValidation,
+      required this.dateDebut,
+      required this.dateFin,
+      required this.x_pat,
+      required this.y_pat,
+      required this.x_hop,
+      required this.y_hop});
   late final String idDemande;
   late final String idPatient;
   late final String ville;
   late final String dateCreation;
   late final String etat;
-  late final String dateValidation;
+  late final String? dateValidation;
   late final String dateDebut;
   late final String dateFin;
-  late final String x_pat ;
-  late final String y_pat ;
-  late final String x_hop ;
-  late final String y_hop ;
+  late final int x_pat;
+  late final int y_pat;
+  late final int x_hop;
+  late final int y_hop;
 
-  Demande.fromJson(Map<String, dynamic> json){
+  Demande.fromJson(Map<String, dynamic> json) {
     idDemande = json['id_demande'];
     idPatient = json['id_patient'];
     ville = json['ville'];

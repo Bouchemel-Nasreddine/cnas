@@ -51,7 +51,7 @@ class LoginView extends StatelessWidget {
                       ),
                       CustomTextField(
                         label: 'Email/ Numéro de téléphone *',
-                        controller: value.emailController,
+                        controller: value.credentialController,
                         type: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null) return '';
@@ -78,9 +78,9 @@ class LoginView extends StatelessWidget {
                           working: value.working,
                           text: 'Sign in',
                           onPressed: () {
-                            // if (_formKey.currentState!.validate()) {
+                            if (_formKey.currentState!.validate()) {
                             value.login(context);
-                            // }
+                            }
                           }),
                     ],
                   ),
