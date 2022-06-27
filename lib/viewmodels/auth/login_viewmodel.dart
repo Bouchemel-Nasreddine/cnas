@@ -1,47 +1,23 @@
 import 'package:cnas/models/auth/login_model.dart';
-import 'package:cnas/config/generale_vars.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart' as dio;
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
-import '../../data classes/Patient.dart';
-import '../../config/const.dart';
 import '../../views/home.dart';
 
 class LoginViewModel extends ChangeNotifier {
-  final emailController = TextEditingController();
-  final forgottenEmailController = TextEditingController();
+  final credentialController = TextEditingController();
   final passwordController = TextEditingController();
-  final verificationCodeController = TextEditingController();
-  final newPasswordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
   bool working = false;
   final model = LoginModel();
 
-  // getWilaya() async {
-  //   http.Response response = await http.get(
-  //     Uri.parse('http://34.88.7.144/sahla/public/api/willaya'),
-  //     headers: {
-  //       "Accept": "application/json",
-  //     },
-  //   );
-  //   if (kDebugMode) {
-  //     print(response.body);
-  //   }
-  // }
-
-  Future<void> login(BuildContext context) async {
-    /*
+  Future<void> loginWithDio(BuildContext context) async {
     if (working) return;
     working = true;
     notifyListeners();
     dio.Response? response = await model.login(
-      hasPhone: isPhone(emailController.text),
-      loginParamName: getLoginParamName(emailController.text),
-      loginParam: emailController.text,
+      type: 'patient',
+      credential: credentialController.text,
       password: passwordController.text,
     );
 
@@ -52,85 +28,39 @@ class LoginViewModel extends ChangeNotifier {
       return;
     }
     if (response.statusCode == 200) {
-      var userCont = Patient.fromJson(response.data);
-
-        navigateToHome(context);
-
-
+      navigateToHome(context);
     } else {
       showSnackBar(context: context, message: "erreur dans l'authentification");
     }
 
     working = false;
     notifyListeners();
-
-     */
-    navigateToHome(context);
   }
 
-  Future<void> forgetPassword(BuildContext context) async {
+  Future<void> login(BuildContext context) async {
     if (working) return;
     working = true;
     notifyListeners();
-
-    dio.Response? response =
-    await model.forgetPassword(email: forgottenEmailController.text);
-
-    if (response == null) {
-      showSnackBar(context: context, message: "erreur dans la récuperaton");
-      working = false;
-      notifyListeners();
-      return;
-    }
-
-    if (response.statusCode == 200) {
-      showSnackBar(
-          context: context,
-          message: "un mail a été envoyé vers l'adresse indiquée");
-      Navigator.of(context).pushNamed('/reset_password_view');
-    } else if (response.statusCode == 422) {
-      displayErrors(context: context, data: response.data);
-    } else {
-      showSnackBar(context: context, message: "erreur dans la récuperaton");
-    }
-
-    working = false;
-    notifyListeners();
-    return;
-  }
-
-  void ressetPassword(BuildContext context) async {
-    if (working) return;
-    working = true;
-    notifyListeners();
-
-    dio.Response? response = await model.resetPassword(
-      codeActivation: verificationCodeController.text,
-      newPassword: newPasswordController.text,
-      confirmationPassword: confirmPasswordController.text,
+    http.Response response = await model.loginWithHttp(
+      type: 'patient',
+      credential: credentialController.text,
+      password: passwordController.text,
     );
 
     if (response == null) {
-      showSnackBar(
-          context: context, message: "erreur dans la reinitialisation");
+      showSnackBar(context: context, message: "erreur dans l'authentification");
       working = false;
       notifyListeners();
       return;
     }
-
     if (response.statusCode == 200) {
-      showSnackBar(
-          context: context, message: "mot de passe reinitialiser avec success");
-      Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
-    } else if (response.statusCode == 422) {
-      displayErrors(context: context, data: response.data);
+      navigateToHome(context);
     } else {
-      showSnackBar(context: context, message: "erreur dans la récuperaton");
+      showSnackBar(context: context, message: "erreur dans l'authentification");
     }
 
     working = false;
     notifyListeners();
-    return;
   }
 
   displayErrors(
@@ -144,22 +74,15 @@ class LoginViewModel extends ChangeNotifier {
     showSnackBar(context: context, message: message);
   }
 
-  int isPhone(String s) {
-    return double.tryParse(s) != null ? 1 : 0;
-  }
-
-  String getLoginParamName(String s) {
-    return double.tryParse(s) != null ? 'phone' : 'email';
-  }
-
   navigateToHome(BuildContext context) {
-    Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context)=> Home()), (route)=>false);
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => Home()), (route) => false);
   }
 
   showSnackBar(
       {required BuildContext context,
-        required String message,
-        Duration duration = const Duration(seconds: 4)}) {
+      required String message,
+      Duration duration = const Duration(seconds: 4)}) {
     final snackBar = SnackBar(
       content: Text(message),
       backgroundColor: Colors.blue,
