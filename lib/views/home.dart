@@ -3,6 +3,7 @@ import 'package:cnas/config/size_config.dart';
 import 'package:cnas/views/demande.dart';
 import 'package:cnas/views/auth/loginView.dart';
 import 'package:cnas/views/demande/list_demande_view.dart';
+import 'package:cnas/views/profile/Screens/ProfilePage.dart';
 import 'package:cnas/views/reclamation/list_reclamation_view.dart';
 import 'package:cnas/views/transport/list_transport_view.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _HomeState extends State<Home> {
     ListDemande(),
     ListTransport(),
     ListReclamation(),
-    Container(child: Text('profile')),
+    ProfilePage(),
   ];
 
   PageController pageController = PageController();
@@ -47,15 +48,15 @@ class _HomeState extends State<Home> {
       ),
       SideMenuItem(
         priority: 2,
-        title: 'Profile',
+        title: 'Reclamation',
         onTap: () => pageController.jumpToPage(2),
-        icon: Icon(Icons.person),
+        icon: Icon(Icons.description),
       ),
       SideMenuItem(
         priority: 3,
-        title: 'Reclamation',
+        title: 'Profile',
         onTap: () => pageController.jumpToPage(3),
-        icon: Icon(Icons.description),
+        icon: Icon(Icons.person),
       ),
     ];
 
