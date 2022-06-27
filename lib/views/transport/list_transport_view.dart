@@ -17,17 +17,17 @@ class _ListTransportState extends State<ListTransport> {
         backgroundColor: Colors.transparent,
         body: Center(
           child: SizedBox(
-            width: SizeConfig.screenWidth * 0.8,
+            width: SizeConfig.screenWidth * 0.65,
             child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.8/5),child: Text("IdTrasnport",style: GoogleFonts.poppins(fontSize: 20 , fontWeight: FontWeight.w500 ,color: Color(0xFF1F2938)))),
-                      Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.8/5),child: Text("ETS" ,style: GoogleFonts.poppins(fontSize: 20 , fontWeight: FontWeight.w500 ,color: Color(0xFF1F2938)))),
-                      Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.8/5),child: Text("Date Debut",style: GoogleFonts.poppins(fontSize: 20 , fontWeight: FontWeight.w500 ,color: Color(0xFF1F2938)))),
-                      Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.8/5),child: Text("Date fin",style: GoogleFonts.poppins(fontSize: 20 , fontWeight: FontWeight.w500 ,color: Color(0xFF1F2938)))),
-                      Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.8/5),child: Text("Statut",style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w500 ,color: Color(0xFF1F2938)))),
+                      Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("IdTrasnport",style: GoogleFonts.poppins(fontSize: 20 , fontWeight: FontWeight.w500 ,color: Color(0xFF1F2938)))),
+                      Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("ETS" ,style: GoogleFonts.poppins(fontSize: 20 , fontWeight: FontWeight.w500 ,color: Color(0xFF1F2938)))),
+                      Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("Date Debut",style: GoogleFonts.poppins(fontSize: 20 , fontWeight: FontWeight.w500 ,color: Color(0xFF1F2938)))),
+                      Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("Date fin",style: GoogleFonts.poppins(fontSize: 20 , fontWeight: FontWeight.w500 ,color: Color(0xFF1F2938)))),
+                      Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("Statut",style: GoogleFonts.poppins(fontSize: 20, fontWeight: FontWeight.w500 ,color: Color(0xFF1F2938)))),
                     ],
                   ),
                   Container(
@@ -50,11 +50,11 @@ class _ListTransportState extends State<ListTransport> {
                             height: SizeConfig.screenHeight * 0.08,
                             child: Row(
                               children: [
-                                Container( alignment: Alignment.center,width : SizeConfig.screenWidth * (0.8/5),child: Text("IdTransport",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
-                                Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.8/5),child: Text("ETS",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
-                                Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.8/5),child: Text("Date Debut",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
-                                Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.8/5),child: Text("Date fin",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
-                                Container(alignment: Alignment.center,width: SizeConfig.screenWidth * (0.8/5) ,color: lightYellow, child:
+                                Container( alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("IdTransport",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
+                                Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("ETS",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
+                                Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("Date Debut",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
+                                Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("Date fin",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
+                                Container(alignment: Alignment.center,width: SizeConfig.screenWidth * (0.65/5) ,color: lightYellow, child:
                                 Text("Statut",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: yellow) ,)),
                               ],
                             ),
