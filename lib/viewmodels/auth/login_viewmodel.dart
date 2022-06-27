@@ -1,3 +1,5 @@
+import 'package:cnas/config/generale_vars.dart';
+import 'package:cnas/data%20classes/Patient.dart';
 import 'package:cnas/models/auth/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart' as dio;
@@ -11,7 +13,7 @@ class LoginViewModel extends ChangeNotifier {
   bool working = false;
   final model = LoginModel();
 
-  Future<void> loginWithDio(BuildContext context) async {
+  Future<void> login(BuildContext context) async {
     if (working) return;
     working = true;
     notifyListeners();
@@ -28,6 +30,7 @@ class LoginViewModel extends ChangeNotifier {
       return;
     }
     if (response.statusCode == 200) {
+      patientConst = Patient.fromJson(response.data);
       navigateToHome(context);
     } else {
       showSnackBar(context: context, message: "erreur dans l'authentification");
@@ -37,7 +40,7 @@ class LoginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> login(BuildContext context) async {
+  Future<void> loginWithHttp(BuildContext context) async {
     if (working) return;
     working = true;
     notifyListeners();

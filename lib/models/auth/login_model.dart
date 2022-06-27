@@ -17,7 +17,10 @@ class LoginModel {
     try {
       dio.Response response = await _dioClient.post(
         loginUrl,
-        data: dio.FormData.fromMap(
+        options: dio.Options(
+          contentType: "application/json",
+        ),
+        data: jsonEncode(
           {
             'type': type,
             'credential': credential,
