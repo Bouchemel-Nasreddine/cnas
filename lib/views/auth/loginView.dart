@@ -18,7 +18,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -79,7 +79,7 @@ class LoginView extends StatelessWidget {
                           text: 'Sign in',
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                            value.login(context);
+                              value.login(context);
                             }
                           }),
                     ],

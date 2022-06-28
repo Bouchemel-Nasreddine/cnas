@@ -65,11 +65,15 @@ class _HomeState extends State<Home> {
       backgroundColor: Color(0xFFF6F6F6),
       body: Row(
         children: [
-          SideMenu(
-            items: items,
-            controller: pageController,
-            style: SideMenuStyle(
-              selectedIconColor: red,
+          Padding(
+            padding:
+                EdgeInsets.symmetric(vertical: SizeConfig.screenHeight * 0.07),
+            child: SideMenu(
+              items: items,
+              controller: pageController,
+              style: SideMenuStyle(
+                selectedIconColor: red,
+              ),
             ),
           ),
           Expanded(
