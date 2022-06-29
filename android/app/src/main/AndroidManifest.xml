@@ -3,7 +3,10 @@
    <application
         android:label="cnas"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+             >
+              <meta-data android:name="com.google.android.geo.API_KEY"  
+             android:value="AIzaSyDjrV7E0vKuafUAtuORHg94mYKLLm378xs"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
