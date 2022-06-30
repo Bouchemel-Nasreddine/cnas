@@ -8,7 +8,7 @@ class PatientViewModel extends ChangeNotifier {
   Future<void> getPatients() async {
     var userData;
 
-    dio.Response? profileResponse = await model.getPatients();
+    dio.Response? profileResponse = await model.getPatient();
 
     if (profileResponse == null) {
       return;

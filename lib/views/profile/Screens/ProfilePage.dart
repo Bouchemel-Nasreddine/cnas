@@ -1,8 +1,9 @@
-
-
 import 'package:cnas/config/size_config.dart';
+import 'package:cnas/data%20classes/Patient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:dio/dio.dart' as dio;
+import '../../../models/patient_model.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -11,20 +12,28 @@ class ProfilePage extends StatefulWidget {
 
 class MapScreenState extends State<ProfilePage>
     with SingleTickerProviderStateMixin {
+   Patient? patient ;
+  bool working = false;
   final FocusNode myFocusNode = FocusNode();
-  late bool _status =true;
+  bool _status =true;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getPatient();
   }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
         body: SingleChildScrollView(
-          child: new Container(
+          child:  working
+              ? const Center(
+            child: CircularProgressIndicator(),
+          )
+              :
+          new Container(
             height: SizeConfig.screenHeight * 0.9,
             color: Colors.white,
             child: new ListView(
@@ -88,12 +97,7 @@ class MapScreenState extends State<ProfilePage>
                                   mainAxisSize: MainAxisSize.max,
                                   children: <Widget>[
                                     new Flexible(
-                                      child: new TextField(
-                                        decoration: const InputDecoration(
-                                          hintText: "Enter Your Name",
-                                        ),
-                                        enabled: !_status,
-                                        autofocus: !_status,
+                                      child: new Text(patient!.lastName
 
                                       ),
                                     ),
@@ -126,10 +130,8 @@ class MapScreenState extends State<ProfilePage>
                                   mainAxisSize: MainAxisSize.max,
                                   children: <Widget>[
                                     new Flexible(
-                                      child: new TextField(
-                                        decoration: const InputDecoration(
-                                            hintText: "Prenom"),
-                                        enabled: !_status,
+                                      child: new Text(
+                                        patient!.firstName
                                       ),
                                     ),
                                   ],
@@ -161,77 +163,21 @@ class MapScreenState extends State<ProfilePage>
                                   mainAxisSize: MainAxisSize.max,
                                   children: <Widget>[
                                     new Flexible(
-                                      child: new TextField(
-                                        decoration: const InputDecoration(
-                                            hintText: "NSS"),
-                                        enabled: !_status,
+                                      child: new Text(
+                                        patient!.nss
                                       ),
                                     ),
                                   ],
                                 )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 25.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Container(
-                                        child: new Text(
-                                          'Code',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        child: new Text(
-                                          'Etat',
-                                          style: TextStyle(
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
+
+
+
                                   ],
                                 )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 25.0, right: 25.0, top: 2.0),
-                                child: new Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Flexible(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(right: 10.0),
-                                        child: new TextField(
-                                          decoration: const InputDecoration(
-                                              hintText: "Enter Pin Code"),
-                                          enabled: !_status,
-                                        ),
-                                      ),
-                                      flex: 2,
-                                    ),
-                                    Flexible(
-                                      child: new TextField(
-                                        decoration: const InputDecoration(
-                                            hintText: "Enter State"),
-                                        enabled: !_status,
-                                      ),
-                                      flex: 2,
-                                    ),
-                                  ],
-                                )),
-                          ],
+
                         ),
-                      ),
-                    )
+
+
                   ],
                 ),
               ],
@@ -247,7 +193,48 @@ class MapScreenState extends State<ProfilePage>
     super.dispose();
   }
 
+  Future<void> getPatient() async {
+    setState(() {
+      working = true;
+    });
+    final model = PatientModel();
+    dio.Response? response = await model.getPatient();
 
+
+    if (response == null) {
+      showSnackBar(context: context, message: "erreur dans la connexion");
+
+      setState(() {
+        working = false;
+      });
+      return;
+    }
+
+    if (response.statusCode == 200) {
+      print(response.data);
+      var d = response.data ;
+      patient  =  Patient.fromJson(d);
+    } else {
+      showSnackBar(context: context, message: "erreur dans la connexion");
+    }
+
+    setState(() {
+      working = false;
+    });
+  }
+
+  showSnackBar(
+      {required BuildContext context,
+        required String message,
+        Duration duration = const Duration(seconds: 4)}) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.blue,
+      behavior: SnackBarBehavior.floating,
+      duration: duration,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
 
 }

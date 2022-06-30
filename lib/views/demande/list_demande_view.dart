@@ -1,13 +1,12 @@
 import 'package:cnas/config/const.dart';
 import 'package:cnas/config/size_config.dart';
 import 'package:cnas/data%20classes/Demande.dart';
-import 'package:cnas/models/patient_model.dart';
-import 'package:cnas/views/demande/detail_demande.dart';
+import 'package:cnas/models/demande_model.dart';
+import 'package:cnas/views/demande/detail_demande_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cnas/config/size_config.dart';
 import 'package:dio/dio.dart' as dio;
-
-import '../../models/demandes_model.dart';
 
 class ListDemande extends StatefulWidget {
   const ListDemande({Key? key}) : super(key: key);
@@ -17,88 +16,104 @@ class ListDemande extends StatefulWidget {
 }
 
 class _ListDemandeState extends State<ListDemande> {
-  List<Demande> demandes = [];
-  bool working = false;
+  List<Demande> listDemande = [];
+  bool isLoading = true;
 
   @override
-  initState() {
+  void initState() {
+    getDemande();
     super.initState();
-    getDemandes();
   }
 
   @override
   Widget build(BuildContext context) {
+    //Size screenWidth = MediaQuery.of(context).size.width as Size;
+    //Size heightscreen = MediaQuery.of(context).size.height as Size;
+
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: Center(
-          child: working
-              ? const SizedBox(
-                  child: CircularProgressIndicator(),
-                )
+          child: isLoading
+              ? CircularProgressIndicator()
               : SizedBox(
-                  width: SizeConfig.screenWidth * 0.65,
+                  width: MediaQuery.of(context).size.width * 0.7,
                   child: Column(children: [
+                    SizedBox(
+                      height: 5.0,
+                    ),
+                    Text("Liste des demandes de transport sanitaire",
+                        style: GoogleFonts.poppins(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w900,
+                            color: Color(0xFF5F5050))),
+                    SizedBox(
+                      height: 50.0,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
                             alignment: Alignment.center,
-                            width: SizeConfig.screenWidth * (0.65 / 5),
-                            child: Text("IdDemande",
+                            width:
+                                MediaQuery.of(context).size.width * (0.7 / 5),
+                            child: Text("N° de la demande",
                                 style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
                                     color: Color(0xFF1F2938)))),
                         Container(
                             alignment: Alignment.center,
-                            width: SizeConfig.screenWidth * (0.65 / 5),
+                            width:
+                                MediaQuery.of(context).size.width * (0.7 / 5),
                             child: Text("Ville",
                                 style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
                                     color: Color(0xFF1F2938)))),
                         Container(
                             alignment: Alignment.center,
-                            width: SizeConfig.screenWidth * (0.65 / 5),
+                            width:
+                                MediaQuery.of(context).size.width * (0.7 / 5),
                             child: Text("Déposé à",
                                 style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
                                     color: Color(0xFF1F2938)))),
                         Container(
                             alignment: Alignment.center,
-                            width: SizeConfig.screenWidth * (0.65 / 5),
+                            width:
+                                MediaQuery.of(context).size.width * (0.7 / 5),
                             child: Text("Date limite",
                                 style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
                                     color: Color(0xFF1F2938)))),
                         Container(
                             alignment: Alignment.center,
-                            width: SizeConfig.screenWidth * (0.65 / 5),
-                            child: Text("statut",
+                            width:
+                                MediaQuery.of(context).size.width * (0.7 / 5),
+                            child: Text("Statut",
                                 style: GoogleFonts.poppins(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
                                     color: Color(0xFF1F2938)))),
                       ],
+                    ),
+                    SizedBox(
+                      height: 10.0,
                     ),
                     Container(
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(
-                              SizeConfig.screenHeight * 0.02)),
+                              MediaQuery.of(context).size.height * 0.02)),
                       clipBehavior: Clip.antiAlias,
-                      height: SizeConfig.screenHeight * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.7,
                       child: ListView.builder(
-                        itemCount: demandes.length,
+                        itemCount: listDemande.length,
                         itemBuilder: (context, index) => InkWell(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => DetailDemande()),
-                            );
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => DetailDemande(id: listDemande[index].idDemande ) ));
                           },
                           child: Container(
                               child: Container(
@@ -107,51 +122,58 @@ class _ListDemandeState extends State<ListDemande> {
                                 border: Border(
                                     bottom: BorderSide(
                                         width: 1, color: Color(0xFFF6F6F6)))),
-                            height: SizeConfig.screenHeight * 0.08,
+                            height: MediaQuery.of(context).size.height * 0.08,
                             child: Row(
                               children: [
                                 Container(
                                     alignment: Alignment.center,
-                                    width: SizeConfig.screenWidth * (0.65 / 5),
-                                    child: Text(demandes[index].idDemande,
+                                    width: MediaQuery.of(context).size.width *
+                                        (0.7 / 5),
+                                    child: Text(listDemande[index].idDemande,
                                         style: GoogleFonts.poppins(
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             fontWeight: FontWeight.w500,
                                             color: Color(0xFF767676)))),
                                 Container(
                                     alignment: Alignment.center,
-                                    width: SizeConfig.screenWidth * (0.65 / 5),
-                                    child: Text(demandes[index].ville,
+                                    width: MediaQuery.of(context).size.width *
+                                        (0.7 / 5),
+                                    child: Text(listDemande[index].ville,
                                         style: GoogleFonts.poppins(
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             fontWeight: FontWeight.w500,
                                             color: Color(0xFF767676)))),
                                 Container(
                                     alignment: Alignment.center,
-                                    width: SizeConfig.screenWidth * (0.65 / 5),
-                                    child: Text(demandes[index].dateCreation,
+                                    width: MediaQuery.of(context).size.width *
+                                        (0.7 / 5),
+                                    child: Text(listDemande[index].dateCreation,
                                         style: GoogleFonts.poppins(
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             fontWeight: FontWeight.w500,
                                             color: Color(0xFF767676)))),
                                 Container(
                                     alignment: Alignment.center,
-                                    width: SizeConfig.screenWidth * (0.65 / 5),
-                                    child: Text(demandes[index].dateFin,
+                                    width: MediaQuery.of(context).size.width *
+                                        (0.7 / 5),
+                                    child: Text(listDemande[index].dateCreation,
                                         style: GoogleFonts.poppins(
-                                            fontSize: 14,
+                                            fontSize: 12,
                                             fontWeight: FontWeight.w500,
                                             color: Color(0xFF767676)))),
                                 Container(
                                     alignment: Alignment.center,
-                                    width: SizeConfig.screenWidth * (0.65 / 5),
-                                    color: lightYellow,
+                                    width: MediaQuery.of(context).size.width *
+                                        (0.7 / 5),
+                                    color: getStateBackColor(
+                                        listDemande[index].etat),
                                     child: Text(
-                                      demandes[index].etat,
+                                      listDemande[index].etat,
                                       style: GoogleFonts.poppins(
-                                          fontSize: 14,
+                                          fontSize: 12,
                                           fontWeight: FontWeight.w500,
-                                          color: yellow),
+                                          color: getStateColor(
+                                              listDemande[index].etat)),
                                     )),
                               ],
                             ),
@@ -164,48 +186,48 @@ class _ListDemandeState extends State<ListDemande> {
         ));
   }
 
-  Future<void> getDemandes() async {
-    setState(() {
-      working = true;
-    });
-    final model = DemandeModel();
-    dio.Response? response = await model.getDemandes();
-    List<Demande> list = [];
+  Future<void> getDemande() async {
+    final demandeModel = DemandeModel();
 
-    if (response == null) {
-      showSnackBar(context: context, message: "erreur dans l'authentification");
-      demandes = [];
-      setState(() {
-        working = false;
-      });
-      return;
-    }
+    dio.Response? response = await demandeModel.getDemande();
 
-    if (response.statusCode == 200) {
-      print(response.data);
-      for (var d in response.data) {
-        list.add(Demande.fromJson(d));
+    if (response != null) {
+      for (var i in response.data) {
+        if (i != null) {
+          var demande = Demande.fromJson(i);
+          listDemande.add(demande);
+        }
       }
-      demandes = list;
-    } else {
-      showSnackBar(context: context, message: "erreur dans l'authentification");
     }
 
     setState(() {
-      working = false;
+      isLoading = false;
     });
   }
 
-  showSnackBar(
-      {required BuildContext context,
-      required String message,
-      Duration duration = const Duration(seconds: 4)}) {
-    final snackBar = SnackBar(
-      content: Text(message),
-      backgroundColor: Colors.blue,
-      behavior: SnackBarBehavior.floating,
-      duration: duration,
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  getStateColor(String state) {
+    switch (state) {
+      case 'en cours':
+        return yellow;
+      case 'validé':
+        return green;
+      case 'accepté':
+        return blue;
+      case 'refusé':
+        return red;
+    }
+  }
+
+  getStateBackColor(String state) {
+    switch (state) {
+      case 'en cours':
+        return lightYellow;
+      case 'validé':
+        return lightGreen;
+      case 'accepté':
+        return lightBlue;
+      case 'refusé':
+        return lightRed;
+    }
   }
 }
