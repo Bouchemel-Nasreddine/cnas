@@ -13,9 +13,9 @@ class Transport{
 
   });
   late final String idTransport;
-  late final Demande demande;
-  late final Propostion proposition;
-  late final ETS ets;
+  late final String demande;
+  late final String proposition;
+  late final String ets;
 
 
 

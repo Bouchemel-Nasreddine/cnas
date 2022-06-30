@@ -2,6 +2,9 @@ import 'package:cnas/config/const.dart';
 import 'package:cnas/config/size_config.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:dio/dio.dart' as dio;
+import '../../data classes/Transport.dart';
+import '../../models/transport_model.dart';
 
 class ListTransport extends StatefulWidget {
   const ListTransport({Key? key}) : super(key: key);
@@ -11,6 +14,8 @@ class ListTransport extends StatefulWidget {
 }
 
 class _ListTransportState extends State<ListTransport> {
+  List<Transport> transports = [];
+  bool working = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,8 +55,8 @@ class _ListTransportState extends State<ListTransport> {
                             height: SizeConfig.screenHeight * 0.08,
                             child: Row(
                               children: [
-                                Container( alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("IdTransport",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
-                                Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("ETS",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
+                                Container( alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text(transports[index].idTransport,style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
+                                Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text(transports[index].ets,style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
                                 Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("Date Debut",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
                                 Container(alignment: Alignment.center,width : SizeConfig.screenWidth * (0.65/5),child: Text("Date fin",style: GoogleFonts.poppins(fontSize: 14 , fontWeight: FontWeight.w500 ,color: Color(0xFF767676)))),
                                 Container(alignment: Alignment.center,width: SizeConfig.screenWidth * (0.65/5) ,color: lightYellow, child:
@@ -64,5 +69,50 @@ class _ListTransportState extends State<ListTransport> {
                 ]),
           ),
         ));
+  }
+
+  Future<void> getTransport() async {
+    setState(() {
+      working = true;
+    });
+    final model = TransportModel();
+    dio.Response? response = await model.getTransport();
+    List<Transport> list = [];
+
+    if (response == null) {
+      showSnackBar(context: context, message: "erreur dans la connexion");
+      transports = [];
+      setState(() {
+        working = false;
+      });
+      return;
+    }
+
+    if (response.statusCode == 200) {
+      print(response.data);
+      for (var d in response.data) {
+        list.add(Transport.fromJson(d));
+      }
+      transports = list;
+    } else {
+      showSnackBar(context: context, message: "erreur dans la connexion");
+    }
+
+    setState(() {
+      working = false;
+    });
+  }
+
+  showSnackBar(
+      {required BuildContext context,
+        required String message,
+        Duration duration = const Duration(seconds: 4)}) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      backgroundColor: Colors.blue,
+      behavior: SnackBarBehavior.floating,
+      duration: duration,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

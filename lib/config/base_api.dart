@@ -3,6 +3,7 @@ const baseApi = "https://cnas2cs.herokuapp.com";
 //const baseApi = "https://c589-105-235-130-170.in.ngrok.io";
 var registerUrl = baseApi + "/register";
 var loginUrl = baseApi + "/login/";
+var demandeUrl = baseApi +"/demande";
 var profileUrl = baseApi + "/profile";
 var forgetPasswordUrl = baseApi + "/forget_password";
 var resetPasswordUrl = baseApi + "/reset-password";
