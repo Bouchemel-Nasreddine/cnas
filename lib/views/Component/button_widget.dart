@@ -41,8 +41,8 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(SizeConfig.screenHeight * 0.2),
         ),
         fixedSize: Size(
-          SizeConfig.screenWidth * 0.85,
-          SizeConfig.screenHeight * 0.075,
+          SizeConfig.screenWidth * 0.65,
+          SizeConfig.screenHeight * 0.07,
         ),
       ),
     );

@@ -17,6 +17,7 @@ class Demande {
       required this.y_hop,
       required this.adresse_hop});
   late final String idDemande;
+
   late final Patient? patient;
   late final String ville;
   late final String dateCreation;
@@ -25,11 +26,11 @@ class Demande {
   late final String? dateValidation;
   late final String dateDebut;
   late final String dateFin;
-  late final int x_pat;
-  late final int y_pat;
-  late final int x_hop;
-  late final int y_hop;
-  late final String adresse_hop;
+  late String adresse_patient;
+  late String adresse_hospital;
+
+  Demande.initialise();
+
 
   Demande.fromJson(Map<String, dynamic> json) {
     idDemande = json['id_demande'];
@@ -45,7 +46,8 @@ class Demande {
     y_pat = json['y_pat'];
     x_hop = json['x_hop'];
     y_hop = json['y_hop'];
-    adresse_hop = json['adresse_hop'];
+    adresse_patient = json['adresse_patient'];
+    adresse_hospital = json['adresse_hospital'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,7 +65,9 @@ class Demande {
     _data['y_pat'] = y_pat;
     _data['x_hop'] = x_hop;
     _data['y_hop'] = y_hop;
-    _data['adresse_hop'] = adresse_hop;
+    _data['adresse_patient'] = adresse_patient;
+    _data['adresse_hospital'] = adresse_hospital;
+
     return _data;
   }
 }

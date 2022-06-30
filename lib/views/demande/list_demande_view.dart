@@ -8,6 +8,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cnas/config/size_config.dart';
 import 'package:dio/dio.dart' as dio;
 
+
+import '../../models/demandes_model.dart';
+import 'ajouter_demande.dart';
+
+
 class ListDemande extends StatefulWidget {
   const ListDemande({Key? key}) : super(key: key);
 
@@ -31,6 +36,25 @@ class _ListDemandeState extends State<ListDemande> {
     //Size heightscreen = MediaQuery.of(context).size.height as Size;
 
     return Scaffold(
+        floatingActionButton: ElevatedButton(
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Color(0xFF1045F7)),
+              padding: MaterialStateProperty.all(
+                  EdgeInsets.all(MediaQuery.of(context).size.height * 0.03)),
+              textStyle: MaterialStateProperty.all(TextStyle(fontSize: 15))),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => AjouterDemandeView()));
+          },
+          child: Text(
+            "Ajouter une demande",
+            style: GoogleFonts.poppins(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
         backgroundColor: Colors.transparent,
         body: Center(
           child: isLoading

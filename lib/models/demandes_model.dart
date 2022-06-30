@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:cnas/data%20classes/Demande.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
 
@@ -20,5 +23,20 @@ class DemandeModel {
       }
       return e.response;
     }
+  }
+
+  Future<dio.Response?> postDemande({
+    required dateDebut,
+    required dateFin,
+    required x_pat,
+    required y_pat,
+    required x_hos,
+    required y_hos,
+    required description,
+  }) async {
+    dio.Response? response = await _dioClient.post(
+      'https://cnas2cs.herokuapp.com/demande',
+      data: jsonEncode({}),
+    );
   }
 }
